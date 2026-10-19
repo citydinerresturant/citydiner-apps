@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Menu and prices: everyone logged in can read, only the owner can change.
+    match /store/{doc} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.email == 'citydinercpn@gmail.com';
+    }
+    // Bills: logged-in staff can create and update, nobody can delete.
+    match /invoices/{doc} {
+      allow read, create, update: if request.auth != null;
+      allow delete: if false;
+    }
+    // Running table orders
+    match /open/{doc} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
