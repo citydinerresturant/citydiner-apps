@@ -1,0 +1,42 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Build Owner and Waiter APKs
+        run: gradle assembleOwnerDebug assembleWaiterDebug --no-daemon
+      - name: Rename APKs
+        run: |
+          cp app/build/outputs/apk/owner/debug/app-owner-debug.apk CityDiner-Owner.apk
+          cp app/build/outputs/apk/waiter/debug/app-waiter-debug.apk CityDiner-Waiter.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CityDiner-apks
+          path: |
+            CityDiner-Owner.apk
+            CityDiner-Waiter.apk
+      - name: Publish APKs as a release (easy download link)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: CityDiner APKs (latest)
+          files: |
+            CityDiner-Owner.apk
+            CityDiner-Waiter.apk
