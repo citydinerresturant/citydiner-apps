@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>City Diner · WAITER</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0c2a23">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#eff3f1;--card:#fff;--ink:#10241f;--mut:#62776f;--line:#dbe3df;--pri:#0f3d33;--pri-ink:#fff;--gold:#a87a1f;--red:#c0392b;--ok:#1f8a5b;--chip:#e4ebe7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1512;--card:#12251f;--ink:#eaf1ee;--mut:#8fa69e;--line:#24403a;--pri:#d4a843;--pri-ink:#1a1405;--gold:#d4a843;--red:#ef6a56;--ok:#43c68b;--chip:#1b332c}}
+:root[data-theme="dark"]{--bg:#0a1512;--card:#12251f;--ink:#eaf1ee;--mut:#8fa69e;--line:#24403a;--pri:#d4a843;--pri-ink:#1a1405;--gold:#d4a843;--red:#ef6a56;--ok:#43c68b;--chip:#1b332c}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Cinzel,Georgia,serif;margin:0}
+header{background:#0c2a23;color:#f3e9cf;padding:10px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-bottom:2px solid #c9a24a}
+header h1{font-size:20px;letter-spacing:1.5px;color:#e3c274}header small{display:block;font:500 11px Inter;color:#9fb8b0;letter-spacing:.5px}
+nav{display:flex;gap:2px;overflow-x:auto;max-width:100%;order:3;width:100%}.lg{width:46px;height:46px;border-radius:50%;flex:none}.sy{order:2;margin-left:auto;font:600 11px Inter;color:#9fb8b0}@media(min-width:861px){nav{order:1;width:auto}}
+nav button{background:none;border:0;color:#cfe0da;padding:8px 14px;border-radius:8px;font:600 13px Inter;cursor:pointer;white-space:nowrap}
+nav button.on{background:#c9a24a;color:#1a1405}
+main{max-width:1200px;margin:0 auto;padding:14px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px;align-items:start}.grid>*{min-width:0}@media(max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.sticky{position:sticky;top:10px}@media(max-width:860px){.sticky{position:static}}
+input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.row>.fit{flex:none}
+.btn{background:var(--pri);color:var(--pri-ink);border:0;border-radius:8px;padding:10px 14px;font:600 14px Inter;cursor:pointer}
+.btn.alt{background:none;color:var(--ink);border:1px solid var(--line)}.btn.sm{padding:5px 10px;font-size:13px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}
+.chip{flex:none;background:var(--chip);color:var(--ink);border:0;border-radius:99px;padding:6px 12px;font:500 13px Inter;cursor:pointer}
+.chip.on{background:var(--pri);color:var(--pri-ink)}
+#list{max-height:68vh;overflow:auto}
+.ch{font:700 13px Cinzel,serif;color:var(--gold);padding:12px 2px 4px;border-bottom:1px solid var(--line);letter-spacing:.5px}
+.li{display:flex;align-items:center;gap:10px;padding:8px 2px;border-bottom:1px solid var(--line)}
+.li .nm{flex:1;min-width:0;overflow-wrap:anywhere}.dot{width:12px;height:12px;border:1.5px solid;border-radius:3px;display:inline-grid;place-items:center;flex:none}
+.dot::after{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}.dot.v{color:#1f8a5b}.dot.n{color:#c0392b}
+.pb{background:none;border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--ink);font:600 13px Inter;cursor:pointer;min-width:66px}
+.pb:hover{border-color:var(--gold);background:var(--chip)}.pb small{display:block;color:var(--mut);font:500 10px Inter}
+table{width:100%;border-collapse:collapse}th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:500;font-size:12px}
+td.n,th.n{text-align:right}.wrap{overflow-x:auto}
+.tot{display:flex;justify-content:space-between;padding:3px 0}.tot.big{font:700 20px Cinzel,serif;border-top:2px solid var(--ink);margin-top:6px;padding-top:8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.stat b{display:block;font:700 22px Cinzel,serif}.stat span{color:var(--mut);font-size:12px}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:600;border:1px solid var(--line)}
+.tag.due{color:var(--red);border-color:var(--red)}.tag.paid{color:var(--ok);border-color:var(--ok)}
+.mut{color:var(--mut)}.empty{padding:22px;text-align:center;color:var(--mut)}
+.cl{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);gap:8px}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);max-width:420px;width:92%;max-height:92vh;overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+#toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#0c2a23;color:#f3e9cf;padding:9px 16px;border-radius:8px;display:none;z-index:9}
+#bar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:25;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);gap:12px;align-items:center}
+.x{display:none}
+@media(max-width:860px){
+.bt #bar{display:flex}.x{display:inline-block}
+main{padding:10px 10px 90px}.card{padding:12px}
+input,select{font-size:16px}
+#list{max-height:none;overflow:visible}
+.chips{position:sticky;top:0;z-index:2;background:var(--card);margin:0 -12px;padding:8px 12px}
+.btn.sm{padding:8px 13px}
+#bcard{display:none}
+#bcard.open{display:block;position:fixed;inset:0;z-index:30;overflow:auto;border-radius:0;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+}
+#nob{position:fixed;top:60px;right:8px;width:min(380px,calc(100vw - 16px));z-index:2000;max-height:70vh;overflow:auto}
+.bell .bn{background:var(--red);color:#fff;border-radius:99px;font-size:11px;padding:1px 6px;margin-left:4px}.bell .bn:empty{display:none}
+.bell.ring{color:#e3c274}.bell.ring .bi{display:inline-block;animation:bellp 1.2s ease-in-out infinite}
+@keyframes bellp{0%,60%,100%{transform:rotate(0)}15%{transform:rotate(14deg)}30%{transform:rotate(-12deg)}45%{transform:rotate(8deg)}}
+.ob{pointer-events:auto;background:var(--card);color:var(--ink);border:2px solid var(--gold);border-radius:12px;padding:10px 12px;margin:0 auto 8px;max-width:560px;box-shadow:0 6px 20px rgba(0,0,0,.3);animation:obin .25s ease-out}
+@keyframes obin{from{transform:translateY(-30px);opacity:0}to{transform:none;opacity:1}}
+@media print{header,main,#bar,#toast,.noprint{display:none!important}body{background:#fff;color:#000}dialog{border:0;position:static;max-width:none;width:100%;max-height:none}}
+</style>
+<script src="firebase-config.js"></script>
+</head>
+<body>
+<header><img class="lg" id="hl" alt="City Diner logo"><div><h1>CITY DINER</h1><small>WAITER APP · ORDER TAKING</small></div><span class="sy" id="sync"></span><button id="so" style="display:none;order:2;background:none;border:1px solid #3a5b52;color:#cfe0da;border-radius:8px;padding:5px 10px;font:600 12px Inter,sans-serif;cursor:pointer">Sign out</button><button id="vo" style="display:none;order:2;background:none;border:1px solid #3a5b52;color:#cfe0da;border-radius:8px;padding:5px 10px;font:600 12px Inter,sans-serif;cursor:pointer">🔊 Voice ON</button><nav id="nav"></nav></header>
+<main id="app"></main>
+<dialog id="dlg"></dialog>
+<div id="login" style="display:none;position:fixed;inset:0;z-index:60;background:var(--bg);overflow:auto;padding:24px 16px"><div class="card" style="max-width:380px;margin:8vh auto 0;text-align:center"><img id="ll" width="84" height="84" style="border-radius:50%" alt=""><h3 style="margin:8px 0 2px">City Diner</h3><div class="mut" style="margin-bottom:14px">WAITER login (waiter1 / waiter2)</div><input id="le" type="email" placeholder="Email" autocomplete="username" style="margin-bottom:8px"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" style="margin-bottom:10px"><button class="btn" id="lb" style="width:100%">Sign in</button><div id="lerr" style="color:var(--red);margin-top:10px;min-height:20px"></div></div></div>
+<div id="bar"></div>
+<div id="toast" role="status"></div><div id="nob" style="display:none"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr=n=>'₹'+(+n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
+const FORCE_ROLE='waiter';const KEY='citydiner.w1';
+// category, veg(v)/non-veg(n), "Name:full" or "Name:half/full" or "Name:/full"
+const MENU=[
+['Veg Starters','v','Paneer Chilly:250;Veg Manchurian:220;Paneer 65:240;Paneer Crispy:250;Veg Crispy:210;Veg Spring Roll:200;Veg Chilly:200;Baby Corn Chilli:230;Mushroom Chilli:240;Honey Chilli Potato:210'],
+['Non-Veg Starters','n','Spring Roll:300;Chicken Chilli Dry:160/300;Chicken 65:130/250;Chicken Hot Garlic:160/300;Chicken Wings (BBQ-Honey):280;Chicken Crispy:280;Chicken Lollipop:150/280;Chicken Schezwan Dry:280;Masala Lollipop:280;Apple Chicken Lollipop:280;Chicken Oyster:300;Chicken Satay Stick:300'],
+['Veg Soups','v','Manchow Soup:70/130;Hot & Sour Soup:80/150;Cream of Soup:80/150;Tomato Soup:70/130;Lemon Coriander Soup:80/150;Sweet Corn Soup:70/130;Lung Fung Soup:90/170;Clear Soup:70/130'],
+['Non-Veg Soups','n','Chicken Manchow Soup:70/130;Chicken Hot & Sour Soup:80/150;Chicken Cream of Soup:80/150;Chicken Lemon Coriander Soup:80/150;Chicken Sweet Corn Soup:70/130;Chicken Lung Fung Soup:90/170;Chicken Clear Soup:70/130'],
+['Veg Rice','v','Fried Rice:110/220;Schezwan Rice:130/250;Singapuri Rice:130/260;Triple Rice:170/340;Hong Kong Rice:130/250;Manchurian Rice:150/290;Chilli Rice:150/290;Hot Garlic Rice:130/260;Combination Rice:120/250;Egg Rice:100/200;Egg Schezwan Rice:110/220;Thousand Rice:/260;Garden Rice:/240;Crisp Rice:/260;Lemon Rice:120/240;American Rice:130/260'],
+['Non-Veg Rice','n','Fried Rice:110/220;Schezwan Rice:130/250;Singapuri Rice:130/260;Triple Rice:170/340;Hong Kong Rice:130/250;Manchurian Rice:150/290;Chilli Rice:150/290;Hot Garlic Rice:130/260;Combination Rice:120/250;Egg Rice:100/200;Egg Schezwan Rice:110/220;Thousand Rice:/260;Garden Rice:/240;Crisp Rice:/260;Lemon Rice:120/240;American Rice:130/260'],
+['Noodles','n','Hakka Noodles:110/130;Schezwan Noodles:130/250;Chilly Noodles:150/290;Manchurian Noodles:150/290;Triple Noodles:170/340;Singapuri Noodles:130/260;Garden Noodles:/240'],
+['Veg Chinese Main Course','v','Veg Chilli Gravy:150/300;Veg Manchurian Gravy:150/300;Veg Dragon Gravy:150/300;Veg Schezwan Gravy:150/300;Veg Hot Garlic Gravy:150/300;Veg Hong Kong Gravy:150/300;Veg Oyster Sauce Gravy:150/300;Veg Black Pepper Gravy:150/300;Veg Mushroom Gravy:150/300'],
+['Non-Veg Chinese Main Course','n','Chicken Chilli Gravy:150/300;Chicken Manchurian Gravy:150/300;Chicken Dragon Gravy:150/300;Chicken Schezwan Gravy:150/300;Chicken Hot Garlic Gravy:150/300;Chicken Hong Kong Gravy:150/300;Chicken Oyster Sauce Gravy:150/300;Chicken Black Pepper Gravy:150/300;Chicken Mushroom Gravy:150/300'],
+['Tandoori Starter','n','Chicken Tandoori:260/500;Chicken Tikka Kabab (6 pcs):280;Chicken Pahadi Kabab (6 pcs):280;Chicken Reshmi Kabab (6 pcs):330;Chicken Seekh Kabab (6 pcs):210;Chicken Schezwan Tandoori:280/540;Chicken Barra (6 pcs):350;Chicken Banjara (6 pcs):300;Chicken Malai Tikka (6 pcs):330;Chicken Garlic Tikka (6 pcs):300;Chicken Platter (Tikka, Malai Tikka, Pahadi Kabab, Banjara):999;Chicken Kaleji Tandoori (8 pcs):220'],
+['Indian Main Course Veg','v','Paneer Tikka Masala:330;Paneer Butter Masala:330;Paneer Burjee:200;Paneer Handi:250;Paneer Lajawab:250;Dal Tadka:160;Dal Fry:130;Dal Khecdi:230;Dal Kolhapuri:150;Mix Veg:230;Veg Kolhapuri:240;Veg Hyderabadi:240;Veg Patyala:350;Veg Handi:280'],
+['Indian Main Course Non-Veg','n','Butter Chicken:280/500;Chicken Tikka Masala:280/350;Chicken Handi:280/350;Chicken Kolhapuri:300;Chicken Murghmusallam:380/750;Chicken Hydrabadi:340;Chicken Bhuna Dry:350;Chicken Angara:350;Chicken Tawa:350;Chicken Lababdar:320;Chicken Patyala:380;Chicken Chat Pata:380;Chicken Toofani:380;Chicken Lajawab:400;Chicken Bhuna Gravy:380;Mutton Handi:350/680;Mutton Bhuna Masala:430;Mutton Kadai:380;Mutton Masala:380'],
+['Special Arabian Grill','n','Chicken Classic Alfaham:480;Chicken Alfaham Black Pepper:490;Chicken Alfaham Peri Peri:500;Chicken Sawaya Grill Black Pepper:659;Chicken Sawaya Normal:649;Mandi Rice:650;Kabsa Rice:600;Madbi Rice:690;Hamoos:80'],
+['Biryani','n','Mutton Matka Dum Biryani:440;Chicken Matka Dum Biryani:220;Paneer Matka Dum Biryani:200'],
+['Roti','v','Tandoor Wheat Roti:20;Tandoor Wheat Garlic Roti:40;Butter Naan:40;Plain Naan:35;Garlic Naan:50;Butter Kulcha:35;Plain Kulcha:30;Garlic Kulcha:40;Plain Lachha Paratha:35;Butter Lachha Paratha:40;Garlic Lachha Paratha:45;Butter Roti:25;Cheese Butter Garlic Naan:99'],
+['Plain Rice','v','Jeera Rice:100;Steam Rice:80;Biryani Rice:120'],
+['Fries & Papad','v','French Fries Salty:100;French Fries Peri Peri:120;Roasted Papad:50;Masala Papad:80'],
+['Dessert','v','Caramel Pudding:0;Sizzling Brownie:0;Gulab Jamun:0'],
+['Special Menu','n','Mushroom Capichino Soup:200;Dumpling Soup:250;Noodles Thukpa Soup:200;Chicken Golden Fry:300;Chicken Sizzlers:400;Chicken Kung Pao:320;Thai Curry Rice (Red/Green/Yellow):300;Malaysia Rice:140/270;Cheese Packing Rice:320;Paneer Pasanda:280;Chicken Lazeez:350;American Chopsey Noodles:280;Burnt Garlic Noodles:300;Chef Special Kabab Lazeez:380;Chef Special Chicken Roti Shoti Kabab:390;Murg Kabaabe Lazeez:380']
+];
+function seed(){let id=1;const items=[];MENU.forEach(([c,t,s])=>s.split(';').forEach(x=>{const i=x.lastIndexOf(':');const nm=x.slice(0,i),p=x.slice(i+1).split('/');
+ const it={id:id++,cat:c,t,name:nm};if(p.length>1){it.h=+p[0]||0;it.f=+p[1]}else it.f=+p[0];
+ if(c==='Special Menu'&&/Paneer/.test(nm))it.t='v';items.push(it)}));return{seq:1,nid:id,items,invoices:[]}}
+const BIZ={name:'City Diner Restaurant',addr:'Jamilaahmed Heritage Building, Shop No. 10, Uktad Bypass Road, Chiplun',phone:'9665868378'};
+const LOGO="data:image/webp;base64,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";
+let S;try{S=JSON.parse(localStorage.getItem(KEY))||seed()}catch(e){S=seed()}
+if(!S.invoices)S.invoices=[];
+let DB=null,CAN=true,lastMenu='';
+const clone=o=>JSON.parse(JSON.stringify(o));
+const pad=n=>'CD-'+String(n).padStart(4,'0');
+const nextNo=()=>Math.max(0,...S.invoices.map(v=>+String(v.no).replace(/\D/g,'')||0))+1;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const setSync=t=>{const e=$('#sync');if(e)e.textContent=t+' · v5'};
+const saveMenu=()=>{save();lastMenu=JSON.stringify(S.items);
+if(!DB){toast('⚠ Cloud login nahi hai: menu sirf is phone mein hai, waiter ko nahi dikhega');return}
+let done=false;setTimeout(()=>{if(!done)toast('Net slow hai: menu net aate hi waiter ko mil jayega')},4000);
+DB.doc('store/menu').set({items:S.items,nid:S.nid,at:new Date().toISOString()}).then(()=>{done=true;toast('Menu waiters ko bhej diya ✓')}).catch(e=>{done=true;toast(/permission/i.test(String(e&&(e.code||e.message)))?'⚠ Menu save nahi hua: owner email se login karein ('+(window.OWNER_EMAIL||'citydinercpn@gmail.com')+')':'⚠ Menu cloud par save nahi hua, net check karein')})};
+function pullMenu(manual){if(!DB)return;DB.doc('store/menu').get().then(sn=>{if(!sn.exists)return;const d=sn.data(),j=JSON.stringify(d.items);
+ if(j!==lastMenu){lastMenu=j;S.items=clone(d.items);S.nid=d.nid||S.nid;save();if(tab==='bill'){chips();list()}else if(tab==='menu')menu();toast('Menu update ho gaya ✓')}else if(manual)toast('Menu already latest hai ✓')}).catch(()=>{if(manual)toast('Menu nahi aa paya, net check karein')})}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&WAITER)pullMenu()});window.addEventListener('online',()=>{if(WAITER)pullMenu()});
+const saveInv=v=>{save();if(DB)DB.doc('invoices/'+v.no).set(v).catch(()=>toast('Bill could not sync'))};
+const SDK=['https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js','https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js','https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js'];
+const loadScript=u=>new Promise((res,rej)=>{const e=document.createElement('script');e.src=u;e.onload=res;e.onerror=rej;document.head.appendChild(e)});
+let tblSeen=false;let unsubs=[],WAITER=true,WEMAIL='',WORD=[],NEWO=[],menuSeen=false;
+const authMsg=c=>/invalid|wrong|not-found|credential/.test(c)?'Email or password is wrong':/network/.test(c)?'No internet connection':/too-many/.test(c)?'Too many tries, wait a minute':'Could not sign in';
+async function initCloud(){
+const cfg=window.FB_CONFIG;
+if(!cfg||!cfg.apiKey||/PASTE/i.test(cfg.apiKey))return setSync('This device only');
+$('#login').style.display='block';$('#ll').src=LOGO;$('#lerr').textContent='Loading…';
+try{
+for(const u of SDK)await loadScript(u);
+firebase.initializeApp(cfg);const auth=firebase.auth(),fs=firebase.firestore();
+try{await fs.enablePersistence({synchronizeTabs:true})}catch(e){}
+$('#lerr').textContent='';
+$('#lb').onclick=async()=>{$('#lerr').textContent='';try{await auth.signInWithEmailAndPassword($('#le').value.trim(),$('#lp').value)}catch(e){$('#lerr').textContent=authMsg(e.code||'')}};
+$('#lp').onkeydown=e=>{if(e.key==='Enter')$('#lb').click()};
+$('#so').onclick=()=>auth.signOut();
+auth.onAuthStateChanged(u=>{unsubs.forEach(f=>f());unsubs=[];
+ if(!u){DB=null;WAITER=false;$('#login').style.display='block';$('#so').style.display='none';$('#vo').style.display='none';return setSync('Signed out')}
+ $('#login').style.display='none';$('#so').style.display='';$('#lp').value='';
+ DB={doc:p=>{const r=fs.doc(p);return{set:o=>r.set(clone(o)),get:()=>r.get(),delete:()=>r.delete(),update:o=>r.update(o),onSnapshot:(a,b)=>r.onSnapshot(a,b)}},collection:p=>fs.collection(p)};
+ const ow=(window.OWNER_EMAIL||'').trim().toLowerCase(),em=(u.email||'').toLowerCase();WAITER=em.startsWith((window.WAITER_PREFIX||'waiter').toLowerCase());WEMAIL=u.email||'';CAN=!WAITER&&(!ow||em===ow);
+  if((FORCE_ROLE==='waiter')!==WAITER){$('#lerr').textContent=FORCE_ROLE==='owner'?'Ye owner ka app hai. Waiter apne mobile app se login karein.':'Ye waiter ka app hai. Owner apne window (computer) app se login kare.';auth.signOut();return}
+ setSync('☁ '+(u.email||'Cloud sync on'));firstOpen=true;menuSeen=false;tblSeen=false;if(WAITER&&!WT.includes(cur)){cur='Counter';loadT(cur)}$('#vo').style.display=CAN?'':'none';voiceBtn();if(WAITER&&tab!=='sent')tab='bill';render();
+ unsubs.push(DB.doc('store/menu').onSnapshot(sn=>{
+  if(sn.exists){const d=sn.data(),j=JSON.stringify(d.items);if(j!==lastMenu){lastMenu=j;S.items=clone(d.items);S.nid=d.nid||S.nid;save();if(WAITER&&menuSeen)toast('Owner ne menu update kiya ✓');if(tab==='bill'){chips();list()}else if(tab==='menu')menu()}menuSeen=true}
+  else if(CAN){lastMenu=JSON.stringify(S.items);DB.doc('store/menu').set({items:S.items,nid:S.nid}).catch(()=>{})}
+ },()=>setSync('Sync paused')));
+ unsubs.push(DB.doc('store/tables').onSnapshot(sn=>{if(!sn.exists)return;const l=(sn.data().list||[]).map(String).filter(Boolean);if(!l.length)return;
+   if(JSON.stringify(l)!==JSON.stringify(WT)){WT=l;S.wt=l;save();if(tab==='bill')tables();if(WAITER&&tblSeen)toast('Tables update ho gaye ✓')}tblSeen=true},()=>{}));
+  if(WAITER){unsubs.push(DB.collection('orders').where('by','==',u.email).limit(60).onSnapshot(sn=>{WORD=sn.docs.map(d=>({...clone(d.data()),_p:d.metadata.hasPendingWrites}));if(tab==='sent')sent()},()=>setSync('Sync paused')))}else{
+ unsubs.push(DB.collection('invoices').orderBy('date','desc').limit(1000).onSnapshot(sn=>{
+  S.invoices=sn.docs.map(d=>clone(d.data()));save();
+  if(['inv','cust','rep'].includes(tab)&&!$('#dlg').open)render()
+ },()=>setSync('Sync paused')));
+ unsubs.push(DB.collection('open').onSnapshot(sn=>{const seen={};
+  sn.docs.forEach(d=>{const o=clone(d.data());if(!o.name||o.name==='Counter')return;seen[o.name]=1;if(o.name!==cur&&!pts[o.name])OPEN[o.name]=o});
+  Object.keys(OPEN).forEach(k=>{if(k==='Counter'||seen[k]||pts[k])return;
+   if(firstOpen)DB.doc('open/'+slug(k)).set(OPEN[k]).catch(()=>{});else if(k!==cur)delete OPEN[k]});
+  firstOpen=false;persist();if(tab==='bill')tables()},()=>{}));
+ if(CAN){unsubs.push(DB.collection('orders').where('status','==','new').onSnapshot(sn=>{sn.docChanges().forEach(ch=>{if(ch.type==='added'){const dd=clone(ch.doc.data());if(dd.type==='shift')applyShift(dd);else applyWaiterOrder(dd)}})},()=>{}));cleanOrders()}}
+});
+}catch(e){$('#login').style.display='none';setSync('This device only (could not reach Firebase)')}}
+const cats=()=>[...new Set(S.items.map(i=>i.cat))];
+let tab='bill',cart=[],q='',cat='All',editMode=false,otype='Dine-in',cx=[],cust={name:'',phone:''},disc=0,mode='Cash';
+const OKEY=KEY+'.open',slug=k=>k.replace(/[^A-Za-z0-9_-]/g,'_')||'t';
+let OPEN={},cur='Counter',pts={},firstOpen=true;
+try{OPEN=JSON.parse(localStorage.getItem(OKEY))||{};cur=localStorage.getItem(OKEY+'.cur')||'Counter'}catch(e){}
+if(!OPEN[cur])cur='Counter';loadT(cur);
+function loadT(k){const o=OPEN[k]||{};cart=clone(o.cart||[]);cust={name:(o.cust&&o.cust.name)||'',phone:(o.cust&&o.cust.phone)||''};disc=o.disc||0;mode=o.mode||'Cash';otype=o.otype||(k==='Counter'?'Takeaway':'Dine-in');cx=clone(o.cx||[])}
+function persist(){try{localStorage.setItem(OKEY,JSON.stringify(OPEN));localStorage.setItem(OKEY+'.cur',cur)}catch(e){}}
+function park(){OPEN[cur]={name:cur,cart:clone(cart),cust:{name:cust.name,phone:cust.phone},disc,mode,otype,cx:clone(cx)};persist();
+ if(DB&&cur!=='Counter'&&!WAITER){const k=cur;clearTimeout(pts[k]);pts[k]=setTimeout(()=>{delete pts[k];if(OPEN[k])DB.doc('open/'+slug(k)).set(OPEN[k]).catch(()=>{})},500)}}
+function switchT(k){park();cur=k;loadT(k);persist();bill()}
+function closeT(r){const k=cur;
+ if(k==='Counter')OPEN.Counter={name:'Counter',cart:[],cust:{name:'',phone:''},disc:0,mode:'Cash'};
+ else{clearTimeout(pts[k]);delete pts[k];delete OPEN[k];if(DB&&!WAITER)DB.doc('open/'+slug(k)).delete().catch(()=>{})}
+ cur='Counter';loadT(cur);persist();if(r!==false)bill()}
+function clearT(){if(!cart.length&&cur!=='Counter')return closeT();cart=[];cust={name:'',phone:''};disc=0;mode='Cash';otype=cur==='Counter'?'Takeaway':'Dine-in';cx=[];bill()}
+function newT(){const d=$('#dlg');d.innerHTML='<h3>New table</h3><p><input id="tn" placeholder="Table name or number (e.g. 3, T4, Takeaway)" maxlength="20"></p><div class="row"><button class="btn alt" id="tc">Cancel</button><button class="btn" id="tk">Open table</button></div>';d.showModal();
+ $('#tc').onclick=()=>d.close();$('#tn').onkeydown=e=>{if(e.key==='Enter')$('#tk').click()};
+ $('#tk').onclick=()=>{const n=$('#tn').value.trim();if(!n)return toast('Enter a table name');d.close();if(!OPEN[n])OPEN[n]={name:n,cart:[],cust:{name:'',phone:''},disc:0,mode:'Cash'};switchT(n)}}
+function tables(){const el=$('#tbl');if(!el)return;if(WAITER)return tablesW(el);
+ const ks=['Counter',...Object.keys(OPEN).filter(k=>k!=='Counter').sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}))];
+ el.innerHTML='<div class="mut" style="font-size:12px;margin-bottom:6px">Running orders: tap a table to switch, nothing is lost</div><div class="chips" style="margin:0;padding:0;position:static">'+ks.map(k=>{const o=OPEN[k];const n=o?o.cart.reduce((a,l)=>a+l.qty,0):0;return `<button class="chip ${k===cur?'on':''}" data-t="${esc(k)}">${k==='Counter'?'Counter':'Table '+esc(k)}${n?' · '+n:''}</button>`}).join('')+'<button class="chip" data-new="1" style="border:1px dashed var(--mut);background:none">+ New table</button>'+(CAN?'<button class="chip" data-wt="1" style="border:1px dashed var(--mut);background:none">⚙ Waiter tables</button>':'')+'</div>'}
+const tabs={bill:'New bill',kot:'KOTs',menu:'Menu',inv:'Invoices',cust:'Customers',rep:'Reports'};
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',2200)}
+const calc=(L,d)=>{const sub=L.reduce((s,l)=>s+l.price*l.qty,0);const dv=sub*Math.min(Math.max(+d||0,0),100)/100;return{sub,dv,total:sub-dv}};
+function render(){if(WAITER&&tab!=='bill'&&tab!=='sent')tab='bill';document.body.classList.toggle("bt",tab==="bill");$('#nav').innerHTML=Object.entries(WAITER?{bill:'New order',sent:'Sent'}:tabs).map(([k,v])=>`<button class="${k===tab?'on':''}" data-t="${k}">${v}</button>`).join('')+(WAITER?'':`<button class="bell ${NEWO.length?'ring':''}" id="bell" aria-label="Notifications"><span class="bi">🔔</span><span class="bn">${NEWO.length||''}</span></button>`);({bill,kot:kots,menu,inv,cust:custs,rep,sent})[tab]()}
+$('#nav').onclick=e=>{const t=e.target.dataset.t;if(t){tab=t;render()}};
+function bill(){
+const custF=`<div class="row" style="margin:10px 0"><input id="cn" placeholder="${WAITER?'Customer ka naam (optional)':'Customer name'}" value="${esc(cust.name)}"></div><input id="cp" placeholder="WhatsApp number (optional)" inputmode="tel" value="${esc(cust.phone)}">`;
+$('#app').innerHTML=`<div class="card" id="tbl" style="margin-bottom:12px"></div><div class="grid"><div class="card"><input id="q" placeholder="Search dishes" aria-label="Search dishes" value="${esc(q)}"><div class="chips" id="chips"></div><div id="list"></div></div>
+<div class="card sticky" id="bcard"><div class="row"><h3>${WAITER?'Order · Table '+esc(cur==='Counter'?'?':cur):'Bill · '+esc(cur)}</h3><button class="btn alt sm fit x" id="bx">Close</button></div>${WAITER?'':custF}<div id="cart"></div>${WAITER?'<div class="mut" style="font-size:12px;margin:14px 0 2px">Customer ki detail (optional) · owner ko bill pe dikhegi</div>'+custF+'<div id="wact"></div>':''}</div></div>`;
+$('#q').oninput=e=>{q=e.target.value;list()};$('#cn').oninput=e=>{cust.name=e.target.value;park()};$('#cp').oninput=e=>{cust.phone=e.target.value;park()};$('#tbl').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.new)newT();else if(b.dataset.rf)pullMenu(true);else if(b.dataset.wt)tablesDlg();else if(b.dataset.t)switchT(b.dataset.t)};
+$('#chips').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;chips();list()}};
+$('#list').onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;const[id,sz]=b.dataset.a.split(':');add(+id,sz)};
+$('#bx').onclick=()=>$('#bcard').classList.remove('open');chips();list();cartUI()}
+function chips(){$('#chips').innerHTML=['All',...cats()].map(c=>`<button class="chip ${c===cat?'on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('')}
+function list(){
+const L=S.items.filter(i=>(cat==='All'||i.cat===cat)&&i.name.toLowerCase().includes(q.toLowerCase()));let h='',last='';
+L.forEach(i=>{if(i.cat!==last){h+=`<div class="ch">${esc(i.cat)}</div>`;last=i.cat}
+const two=i.h!=null;h+=`<div class="li"><span class="dot ${i.t}"></span><span class="nm">${esc(i.name)}</span>${two?`<button class="pb" data-a="${i.id}:H"><small>Half</small>${inr(i.h)}</button>`:''}<button class="pb" data-a="${i.id}:F">${two?'<small>Full</small>':''}${i.f?inr(i.f):'Set price'}</button></div>`});
+$('#list').innerHTML=h||'<div class="empty">No dishes match. Add dishes in the Menu tab.</div>'}
+function add(id,sz){if(WAITER&&cur==='Counter')return toast('Pehle table number chunein');const it=S.items.find(i=>i.id===id);if(!it)return;const price=sz==='H'?it.h:it.f;if(!price)return toast('Set a price for this dish in the Menu tab');
+const k=id+sz;const l=cart.find(x=>x.k===k);l?l.qty++:cart.push({k,name:it.name,size:it.h!=null?(sz==='H'?'Half':'Full'):'',price,qty:1});cartUI()}
+function cartUI(){
+if(WAITER)return cartUIW();
+const c=calc(cart,disc);park();tables();{const n=cart.reduce((a,l)=>a+l.qty,0);$('#bar').innerHTML=`<div style="flex:1"><b>${cur==='Counter'?'Counter':'Table '+esc(cur)} · ${n} item${n===1?'':'s'}</b><br><span class="mut">${inr(c.total)}</span></div><button class="btn" id="vb">View bill</button>`;$('#vb').onclick=()=>$('#bcard').classList.add('open')}
+$('#cart').innerHTML=(cart.length?cart.map((l,i)=>`<div class="cl"><div>${esc(l.name)}${l.size?` <span class="tag">${l.size}</span>`:''}${l.sent?` <span class="tag paid">KOT ${l.sent}</span>`:''}<br><small class="mut">${inr(l.price)} each</small>${l.note?`<br><small>✎ ${esc(l.note)}</small>`:''}</div><div style="white-space:nowrap"><button class="btn alt sm" data-m="${i}" aria-label="Decrease">−</button> ${l.qty} <button class="btn alt sm" data-p="${i}" aria-label="Increase">+</button> <button class="btn alt sm" data-nt="${i}" aria-label="Kitchen note">✎</button></div><b>${inr(l.price*l.qty)}</b></div>`).join(''):'<div class="empty">Tap a dish to start the bill.</div>')+
+`<div class="row" style="margin:10px 0"><select id="ot" aria-label="Order type">${['Dine-in','Takeaway','Delivery'].map(m=>`<option ${m===otype?'selected':''}>${m}</option>`).join('')}</select></div><div class="row" style="margin:10px 0"><label class="fit mut">Discount %</label><input id="ds" type="number" min="0" max="100" value="${disc||''}"><select id="md" aria-label="Payment mode">${['Cash','UPI','Card','Due'].map(m=>`<option ${m===mode?'selected':''}>${m}</option>`).join('')}</select></div>
+<div class="tot"><span>Subtotal</span><span>${inr(c.sub)}</span></div>${c.dv?`<div class="tot"><span>Discount</span><span>−${inr(c.dv)}</span></div>`:''}<div class="tot big"><span>Total</span><span>${inr(c.total)}</span></div>
+${cur!=='Counter'?'<div style="margin-top:10px"><button class="btn alt sm" id="shf">⇄ Table shift</button></div>':''}<div class="row" style="margin-top:12px"><button class="btn alt" id="clr">${cart.length||cur==='Counter'?'Clear':'Remove table'}</button><button class="btn alt" id="kt">${kotLabel()}</button><button class="btn" id="sv">Save bill</button></div>`;
+$('#ds').onchange=e=>{disc=+e.target.value||0;cartUI()};$('#md').onchange=e=>{mode=e.target.value;park()};
+$('#clr').onclick=clearT;{const sf=$('#shf');if(sf)sf.onclick=shiftDlg}$('#sv').onclick=saveBill;$('#kt').onclick=sendKot;$('#ot').onchange=e=>{otype=e.target.value;park()};
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{cart[b.dataset.p].qty++;cartUI()});
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{const l=cart[b.dataset.m];if(--l.qty<1){if(l.sent>0)cx.push({name:l.name,size:l.size,qty:l.sent});cart.splice(b.dataset.m,1)}cartUI()});document.querySelectorAll('[data-nt]').forEach(b=>b.onclick=()=>noteDlg(+b.dataset.nt))}
+let saving=false;
+async function saveBill(){
+if(saving)return;if(!cart.length)return toast('Add at least one dish to the bill');
+saving=true;try{
+const c=calc(cart,disc);let n=nextNo();
+if(DB){try{while((await DB.doc('invoices/'+pad(n)).get()).exists)n++}catch(e){}}
+const v={no:pad(n),date:new Date().toISOString(),cust:cust.name.trim()||'Walk-in',phone:cust.phone.trim(),table:cur==='Counter'?'':cur,lines:cart.map(l=>{const o={...l};delete o.sent;return o}),otype,disc,mode,sub:c.sub,total:c.total,paid:mode!=='Due'};
+S.invoices.unshift(v);saveInv(v);closeT(false);toast('Saved '+v.no);showInv(v.no)
+}finally{saving=false}}
+function menu(){
+const L=S.items.filter(i=>(cat==='All'||i.cat===cat)&&i.name.toLowerCase().includes(q.toLowerCase()));
+$('#app').innerHTML=`<div class="card">${CAN?'':'<div style="background:var(--chip);border:1px solid var(--red);border-radius:8px;padding:10px;margin-bottom:10px;font-size:14px"><b>Menu badalne ke liye owner login chahiye.</b><br>Upar sync line mein jo email dikh raha hai wo owner ka nahi hai. Sign out karke <b>'+esc(window.OWNER_EMAIL||'')+'</b> se login karein.</div>'}<div class="row"><input id="q" placeholder="Search dishes" aria-label="Search dishes" value="${esc(q)}"><button class="btn alt fit" id="mc">Categories</button><button class="btn fit" id="ai">Add dish</button></div><div class="chips" id="chips"></div><div class="wrap"><table id="mt"></table></div></div>`;
+chips();const draw=()=>{const L=S.items.filter(i=>(cat==='All'||i.cat===cat)&&i.name.toLowerCase().includes(q.toLowerCase()));
+$('#mt').innerHTML='<tr><th>Dish</th><th>Category</th><th class="n">Half</th><th class="n">Full</th><th></th></tr>'+L.map(i=>`<tr><td><span class="dot ${i.t}"></span> ${esc(i.name)}</td><td class="mut">${esc(i.cat)}</td><td class="n">${i.h!=null?inr(i.h):'–'}</td><td class="n">${i.f?inr(i.f):'<span style="color:var(--red)">Set price</span>'}</td><td class="n">${CAN?`<button class="btn alt sm" data-e="${i.id}">Edit</button>`:''}</td></tr>`).join('')};draw();
+$('#q').oninput=e=>{q=e.target.value;draw()};$('#chips').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;chips();draw()}};
+$('#ai').onclick=()=>editItem();if(!CAN)$('#ai').style.display='none';$('#mc').onclick=catMgr;if(!CAN)$('#mc').style.display='none';$('#mt').onclick=e=>{const b=e.target.closest('[data-e]');if(b)editItem(+b.dataset.e)}}
+function editItem(id,pre){
+const it=S.items.find(i=>i.id===id)||{name:'',cat:cat==='All'?cats()[0]:cat,t:'v',h:null,f:''};const d=$('#dlg');
+d.innerHTML=`<h3>${id?'Edit dish':'Add dish'}</h3><p><input id="f1" placeholder="Dish name" value="${esc(it.name)}"></p><p><select id="f5s" aria-label="Category">${cats().map(c=>`<option value="${esc(c)}" ${!pre&&c===it.cat?'selected':''}>${esc(c)}</option>`).join('')}<option value="__new" ${pre?'selected':''}>＋ Create new category…</option></select></p><p><input id="f5" placeholder="New category name" value="${esc(pre||'')}" style="${pre?'':'display:none'}"></p>
+<div class="row"><input id="f2" type="number" min="0" placeholder="Half price (optional)" value="${it.h??''}"><input id="f3" type="number" min="0" placeholder="Full price" value="${it.f}"><select id="f4" aria-label="Veg or non-veg"><option value="v" ${it.t==='v'?'selected':''}>Veg</option><option value="n" ${it.t==='n'?'selected':''}>Non-veg</option></select></div>
+<div class="row" style="margin-top:14px">${id?'<button class="btn alt" id="fd">Delete</button>':''}<button class="btn alt" id="fc">Cancel</button><button class="btn" id="fs">Save dish</button></div>`;d.style.maxWidth='';if(!d.open)d.showModal();
+$('#fc').onclick=()=>d.close();$('#f5s').onchange=e=>{const n=e.target.value==='__new';$('#f5').style.display=n?'':'none';if(n)$('#f5').focus()};if(id)$('#fd').onclick=()=>{S.items=S.items.filter(i=>i.id!==id);saveMenu();d.close();render()};
+$('#fs').onclick=()=>{const n=$('#f1').value.trim(),c=$('#f5s').value==='__new'?$('#f5').value.trim():$('#f5s').value,f=$('#f3').value;if(!n||!c||f==='')return toast('Enter name, category and full price');
+const h=$('#f2').value;const o={name:n,cat:c,t:$('#f4').value,f:+f,h:h===''?null:+h};if(!o.h&&o.h!==0)delete o.h;if(id){delete it.h;Object.assign(it,o)}else S.items.push({id:S.nid++,...o});saveMenu();d.close();render()}}
+function inv(){
+$('#app').innerHTML=`<div class="card">${CAN?'':'<div style="background:var(--chip);border:1px solid var(--red);border-radius:8px;padding:10px;margin-bottom:10px;font-size:14px">Bill edit/delete ke liye owner login (<b>'+esc(window.OWNER_EMAIL||'')+'</b>) chahiye.</div>'}<div class="row" style="margin-bottom:10px"><h3>Invoices</h3>${CAN?`<button class="btn ${editMode?'':'alt'} sm fit" id="em">Edit mode: ${editMode?'ON':'OFF'}</button>`:''}</div>${S.invoices.length?`<div class="wrap"><table><tr><th>No.</th><th>Date</th><th>Customer</th><th>Table</th><th class="n">Total</th><th>Status</th><th></th></tr>${S.invoices.map(v=>`<tr><td>${v.no}</td><td>${new Date(v.date).toLocaleDateString('en-IN')}</td><td>${esc(v.cust)}</td><td>${esc(v.table)||'–'}</td><td class="n">${inr(v.total)}</td><td><span class="tag ${v.paid?'paid':'due'}">${v.paid?v.mode:'Due'}</span></td><td class="n" style="white-space:nowrap"><button class="btn alt sm" data-v="${v.no}">Open</button>${editMode&&CAN?` <button class="btn alt sm" data-ed="${v.no}">Edit</button> <button class="btn alt sm" data-dl="${v.no}" style="color:var(--red)">Delete</button>`:''}</td></tr>`).join('')}</table></div>`:'<div class="empty">No invoices yet. Create one from New bill.</div>'}</div>`;
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>showInv(b.dataset.v));document.querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>editInv(b.dataset.ed));document.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>delInv(b.dataset.dl));const em=$('#em');if(em)em.onclick=()=>{editMode=!editMode;inv()}}
+function showInv(no){
+const v=S.invoices.find(x=>x.no===no);if(!v)return;const d=$('#dlg');d.style.maxWidth='';
+d.innerHTML=`<div style="text-align:center"><img src="${LOGO}" alt="" width="64" height="64" style="border-radius:50%"><h3>${BIZ.name}</h3><div class="mut" style="font-size:12px">${BIZ.addr}<br>Phone: ${BIZ.phone}</div></div><div class="mut" style="margin:8px 0">${v.no} · ${new Date(v.date).toLocaleString('en-IN')}<br>${esc(v.cust)}${v.table?' · Table '+esc(v.table):''}${v.phone?' · '+esc(v.phone):''}</div>
+<table>${v.lines.map(l=>`<tr><td>${esc(l.name)}${l.size?' ('+l.size+')':''} × ${l.qty}</td><td class="n">${inr(l.price*l.qty)}</td></tr>`).join('')}</table>
+<div class="tot"><span>Subtotal</span><span>${inr(v.sub)}</span></div>${v.disc?`<div class="tot"><span>Discount ${v.disc}%</span><span>−${inr(v.sub-v.total)}</span></div>`:''}<div class="tot big"><span>Total</span><span>${inr(v.total)}</span></div>
+<p><span class="tag ${v.paid?'paid':'due'}">${v.paid?'Paid · '+v.mode:'Payment due'}</span></p><p class="mut" style="text-align:center">Thank you! Good Food · Good Mood</p>
+<div class="row noprint" style="flex-wrap:wrap">${v.paid?'':'<button class="btn" id="mp">Mark paid</button>'}<button class="btn alt" id="pr">Print</button><button class="btn alt" id="im">Save image</button><button class="btn" id="wa">WhatsApp</button>${CAN?'<button class="btn alt" id="eb">Edit bill</button><button class="btn alt" id="db" style="color:var(--red)">Delete</button>':''}<button class="btn alt" id="cl">Close</button></div>`;
+if(!d.open)d.showModal();$('#cl').onclick=()=>{d.close();render()};$('#pr').onclick=()=>doPrint(v);$('#im').onclick=()=>doImg(v);$('#wa').onclick=()=>askWa(v);if(CAN){$('#eb').onclick=()=>editInv(no);$('#db').onclick=()=>delInv(no)}
+if(!v.paid)$('#mp').onclick=()=>{v.paid=true;v.mode='Cash';saveInv(v);showInv(no)}}
+
+function delInv(no){const v=S.invoices.find(x=>x.no===no);if(!v||!CAN)return;const d=$('#dlg');d.style.maxWidth='';
+d.innerHTML=`<h3>Delete bill?</h3><p><b>${esc(v.no)}</b> · ${esc(v.cust)} · ${inr(v.total)}</p><p class="mut">Ye bill hamesha ke liye delete ho jayega aur reports se bhi hat jayega.</p><div class="row"><button class="btn alt" id="dn">Nahi, rakho</button><button class="btn" id="dy" style="background:var(--red);color:#fff">Haan, delete karo</button></div>`;
+if(!d.open)d.showModal();
+$('#dn').onclick=()=>{d.close();render()};
+$('#dy').onclick=()=>{S.invoices=S.invoices.filter(x=>x.no!==no);save();if(DB)DB.doc('invoices/'+no).delete().catch(()=>toast('Delete could not sync'));d.close();render();toast('Deleted '+no)}}
+function editInv(no){const v0=S.invoices.find(x=>x.no===no);if(!v0||!CAN)return;const d=$('#dlg');d.style.maxWidth='620px';
+const modes=['Cash','UPI','Card','Due'];if(v0.mode&&!modes.includes(v0.mode))modes.push(v0.mode);
+const E={disc:+v0.disc||0,mode:v0.mode||'Cash',lines:clone(v0.lines)};
+const items=S.items.map(i=>({label:i.name+' · '+i.cat,i}));
+d.innerHTML=`<h3>Edit bill · ${esc(v0.no)}</h3>
+<div class="row" style="margin:10px 0"><input id="e_n" placeholder="Customer name" value="${esc(v0.cust||'')}"><input id="e_t" placeholder="Table" value="${esc(v0.table||'')}" style="max-width:120px"></div>
+<p><input id="e_p" placeholder="WhatsApp number" inputmode="tel" value="${esc(v0.phone||'')}"></p>
+<div class="mut" style="font-size:12px;margin-top:6px">Qty aur price yahin badal sakte hain</div><div id="e_l"></div>
+<div class="row" style="margin:10px 0"><input id="e_a" list="e_dl" placeholder="Dish add karein: naam type karein" autocomplete="off"><select id="e_s" style="display:none;max-width:90px" aria-label="Size"><option value="F">Full</option><option value="H">Half</option></select><button class="btn alt sm fit" id="e_add">＋ Add</button></div><datalist id="e_dl">${items.map(x=>`<option value="${esc(x.label)}">`).join('')}</datalist>
+<div class="row" style="margin:10px 0"><label class="fit mut">Discount %</label><input id="e_d" type="number" min="0" max="100" value="${E.disc||''}"><select id="e_m" aria-label="Payment mode">${modes.map(m=>`<option ${m===E.mode?'selected':''}>${esc(m)}</option>`).join('')}</select></div>
+<div id="e_tot"></div>
+<div class="row" style="margin-top:12px"><button class="btn alt" id="e_c">Cancel</button><button class="btn" id="e_save">Save changes</button></div>`;
+if(!d.open)d.showModal();
+const find=()=>{const x=items.find(y=>y.label===$('#e_a').value.trim());return x&&x.i};
+const drawTot=()=>{const c=calc(E.lines.filter(l=>l.qty>0),E.disc);$('#e_tot').innerHTML=`<div class="tot"><span>Subtotal</span><span>${inr(c.sub)}</span></div>${c.dv?`<div class="tot"><span>Discount</span><span>−${inr(c.dv)}</span></div>`:''}<div class="tot big"><span>Total</span><span>${inr(c.total)}</span></div>`};
+const drawLines=()=>{$('#e_l').innerHTML=E.lines.length?E.lines.map((l,i)=>`<div class="cl" style="flex-wrap:wrap"><div style="flex:1 1 140px;min-width:0">${esc(l.name)}${l.size?` <span class="tag">${esc(l.size)}</span>`:''}</div><input type="number" min="0" step="1" value="${l.qty}" data-q="${i}" style="width:64px" aria-label="Quantity"><input type="number" min="0" step="any" value="${l.price}" data-r="${i}" style="width:84px" aria-label="Price each"><b data-lt="${i}" style="min-width:64px;text-align:right">${inr(l.price*l.qty)}</b><button class="btn alt sm" data-x="${i}" aria-label="Remove">✕</button></div>`).join(''):'<div class="empty">Koi dish nahi hai. Neeche se add karein.</div>';drawTot()};
+drawLines();
+$('#e_l').oninput=e=>{const t=e.target,isQ=t.dataset.q!==undefined,i=+(isQ?t.dataset.q:t.dataset.r);if(isNaN(i)||!E.lines[i])return;
+ if(isQ)E.lines[i].qty=Math.max(0,Math.floor(+t.value)||0);else E.lines[i].price=Math.max(0,+t.value||0);
+ const b=$('#e_l').querySelector('[data-lt="'+i+'"]');if(b)b.textContent=inr(E.lines[i].price*E.lines[i].qty);drawTot()};
+$('#e_l').onclick=e=>{const b=e.target.closest('[data-x]');if(!b)return;E.lines.splice(+b.dataset.x,1);drawLines()};
+$('#e_a').oninput=()=>{const it=find();$('#e_s').style.display=it&&it.h!=null?'':'none'};
+$('#e_add').onclick=()=>{const it=find();if(!it)return toast('List mein se dish chuniye');const sz=it.h!=null?$('#e_s').value:'F',price=sz==='H'?it.h:it.f;if(!price)return toast('Is dish ka price Menu mein set karein');
+ const k=it.id+sz,l=E.lines.find(x=>x.k===k&&x.price===price);l?l.qty++:E.lines.push({k,name:it.name,size:it.h!=null?(sz==='H'?'Half':'Full'):'',price,qty:1});
+ $('#e_a').value='';$('#e_s').style.display='none';drawLines()};
+$('#e_d').oninput=e=>{E.disc=Math.min(100,Math.max(0,+e.target.value||0));drawTot()};
+$('#e_m').onchange=e=>{E.mode=e.target.value};
+$('#e_c').onclick=()=>showInv(no);
+$('#e_save').onclick=()=>{const L=E.lines.filter(l=>l.qty>0);
+ if(!L.length)return toast('Kam se kam ek dish rakhein. Bill hatana ho to Delete dabayein');
+ const v=S.invoices.find(x=>x.no===no);if(!v)return;const c=calc(L,E.disc);
+ Object.assign(v,{cust:$('#e_n').value.trim()||'Walk-in',phone:$('#e_p').value.trim(),table:$('#e_t').value.trim(),lines:L,disc:E.disc,mode:E.mode,sub:c.sub,total:c.total,paid:E.mode!=='Due'});
+ saveInv(v);toast('Bill updated');showInv(no)}}
+function catMgr(){const d=$('#dlg');d.style.maxWidth='';
+d.innerHTML=`<h3>Categories</h3><div id="cm">${cats().map(c=>`<div class="cl"><span>${esc(c)} <small class="mut">(${S.items.filter(i=>i.cat===c).length})</small></span><button class="btn alt sm" data-rn="${esc(c)}">Rename</button></div>`).join('')}</div><div class="row" style="margin-top:12px"><button class="btn alt" id="cc">Close</button><button class="btn" id="cnw">＋ New category</button></div>`;
+if(!d.open)d.showModal();$('#cc').onclick=()=>d.close();$('#cnw').onclick=()=>askCat(false);
+$('#cm').onclick=e=>{const b=e.target.closest('[data-rn]');if(b)askCat(b.dataset.rn)}}
+function askCat(old){const d=$('#dlg');
+d.innerHTML=`<h3>${old?'Rename category':'New category'}</h3><p><input id="cnm" placeholder="Category name" maxlength="40" value="${esc(old||'')}"></p>${old?'':'<p class="mut" style="font-size:13px">Category pehli dish add karte hi ban jayegi.</p>'}<div class="row"><button class="btn alt" id="cb">Back</button><button class="btn" id="cs">${old?'Save':'Next: add dish'}</button></div>`;
+setTimeout(()=>{const i=$('#cnm');if(i){i.focus();i.select()}},50);
+$('#cb').onclick=()=>catMgr();$('#cnm').onkeydown=e=>{if(e.key==='Enter')$('#cs').click()};
+$('#cs').onclick=()=>{const n=$('#cnm').value.trim();if(!n)return toast('Category ka naam likhein');
+ if(old){if(n!==old){S.items.forEach(i=>{if(i.cat===old)i.cat=n});if(cat===old)cat=n;saveMenu()}d.close();render()}
+ else{if(cats().includes(n))return toast('Ye category pehle se hai');editItem(undefined,n)}}}
+
+function kotPending(){const items=[],cancels=cx.map(c=>({...c}));
+cart.forEach(l=>{const d=l.qty-(l.sent||0);if(d>0)items.push({name:l.name,size:l.size,qty:d,note:l.note||''});else if(d<0)cancels.push({name:l.name,size:l.size,qty:-d})});
+return{items,cancels}}
+function kotLabel(){if(!cart.length&&!cx.length)return'Send KOT';const p=kotPending(),n=p.items.reduce((a,l)=>a+l.qty,0)+p.cancels.reduce((a,l)=>a+l.qty,0);return n?'Send KOT ('+n+')':'KOT sent ✓'}
+function noteDlg(i){const l=cart[i];if(!l)return;const d=$('#dlg');d.style.maxWidth='';
+d.innerHTML=`<h3>${esc(l.name)}</h3><p><input id="nt" maxlength="60" placeholder="Kitchen note (jaise: kam teekha, bina pyaaz)" value="${esc(l.note||'')}"></p><div class="chips" id="nq" style="position:static;margin:0 0 10px;padding:0">${['Less spicy','Extra spicy','No onion','No garlic','Parcel'].map(t=>`<button class="chip" data-qn="${t}">${t}</button>`).join('')}</div><div class="row"><button class="btn alt" id="nc">Cancel</button><button class="btn" id="ns">Save note</button></div>`;
+if(!d.open)d.showModal();
+$('#nq').onclick=e=>{const t=e.target.dataset.qn;if(t){const v=$('#nt').value.trim();$('#nt').value=v?v+', '+t:t}};
+$('#nc').onclick=()=>d.close();
+$('#ns').onclick=()=>{const v=$('#nt').value.trim();if(v)l.note=v;else delete l.note;d.close();cartUI()}}
+async function sendKot(){const p=kotPending();if(!p.items.length&&!p.cancels.length)return toast(cart.length?'Koi naya item nahi hai, KOT pehle hi bheja ja chuka hai':'Pehle dish add karein');
+const t=new Date(),day=t.toLocaleDateString('en-CA');if(!S.kot||S.kot.d!==day)S.kot={d:day,n:0};S.kot.n++;
+const k={no:S.kot.n,day,time:t.toISOString(),type:otype,table:cur==='Counter'?'':cur,cust:cust.name.trim(),items:p.items,cancels:p.cancels};
+cart.forEach(l=>{l.sent=l.qty});cx=[];S.kots=[k,...(S.kots||[])].slice(0,300);save();cartUI();toast('KOT #'+k.no);await deliverKot(k)}
+async function kotCanvas(k,S){S=S||1;
+const W=576,P=24,H=520+(k.items.length+k.cancels.length)*150,c=document.createElement('canvas');c.width=W*S;c.height=H*S;const x=c.getContext('2d');x.scale(S,S);
+x.fillStyle='#fff';x.fillRect(0,0,W,H);let y=20;
+const F=(w,s)=>x.font=`${w} ${s}px Arial, Helvetica, sans-serif`;
+const wrap=(t,mw)=>{const out=[];let ln='';String(t).split(' ').forEach(w=>{const tt=ln?ln+' '+w:w;if(x.measureText(tt).width>mw&&ln){out.push(ln);ln=w}else ln=tt});if(ln)out.push(ln);return out};
+const ctr=(t,s,w)=>{F(w||'400',s);x.fillStyle='#000';x.textAlign='center';wrap(t,W-2*P).forEach(l=>{y+=s;x.fillText(l,W/2,y);y+=s*.3})};
+const dash=()=>{y+=8;x.strokeStyle='#000';x.setLineDash([6,5]);x.beginPath();x.moveTo(P,y);x.lineTo(W-P,y);x.stroke();y+=14};
+const row=(q,nm,s,note)=>{F('700',s);x.fillStyle='#000';x.textAlign='left';wrap(nm,W-2*P-84).forEach((t,i)=>{y+=s;if(i===0)x.fillText(q,P,y);x.fillText(t,P+84,y);y+=s*.25});
+ if(note){F('italic 600',24);wrap('-> '+note,W-2*P-84).forEach(t=>{y+=24;x.fillText(t,P+84,y);y+=6})}y+=12};
+ctr(BIZ.name,22,'700');ctr('KOT #'+k.no,46,'700');
+if(k.shift){ctr('TABLE SHIFT',34,'700');ctr('TABLE '+k.shift.from+'  ->  TABLE '+k.shift.to,38,'700')}else ctr((k.type||'Dine-in').toUpperCase()+(k.table?' · TABLE '+k.table:''),32,'700');
+ctr(new Date(k.time).toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'})+(k.cust?' · '+k.cust:''),20);dash();
+k.items.forEach(l=>row(l.qty+' ×',l.name+(l.size?' ('+l.size+')':''),32,l.note));
+if(k.cancels.length){if(k.items.length)dash();ctr('*** CANCELLED ***',28,'700');y+=6;k.cancels.forEach(l=>row(l.qty+' ×','CANCEL: '+l.name+(l.size?' ('+l.size+')':''),28))}
+dash();if(!k.shift)ctr('Total items: '+k.items.reduce((a,l)=>a+l.qty,0),22,'700');
+const o=document.createElement('canvas');o.width=W*S;o.height=Math.ceil((y+30)*S);const g=o.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,W*S,o.height);g.drawImage(c,0,0);return o}
+async function doKot(k){try{await printCv(await kotCanvas(k,window.AndroidBridge?2:1),'KOT-'+k.no)}catch(e){toast('KOT print nahi ho paya')}}
+function kotText(k){const B='```',dt=new Date(k.time).toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'}),ln=l=>l.qty+' x '+l.name+(l.size?' ('+l.size+')':'');
+if(k.shift)return `🔁 *TABLE SHIFT · KOT #${k.no}*\nTable ${k.shift.from} → Table ${k.shift.to}\n${dt}\nKitchen: order naye table pe dena`;
+let t=`🍳 *KOT #${k.no}*\n${k.type||'Dine-in'}${k.table?' · Table '+k.table:''}\n${dt}${k.cust?'\n'+k.cust:''}\n`;
+if(k.items.length)t+=`${B}\n${k.items.map(l=>ln(l)+(l.note?'\n   -> '+l.note:'')).join('\n')}\n${B}\n`;
+if(k.cancels.length)t+=`❌ *CANCELLED*\n${B}\n${k.cancels.map(ln).join('\n')}\n${B}\n`;
+return t+`Total items: ${k.items.reduce((a,l)=>a+l.qty,0)}`}
+function kotNum(){let p=String((S.kcfg&&S.kcfg.num)||'').replace(/\D/g,'');if(p.length>10&&p.indexOf('91')===0)p=p.slice(2);return p.length===10?p:''}
+function kotWa(k){const p=kotNum();if(!p){kotSetup(k);return false}
+const ph='91'+p,text=kotText(k);
+if(window.AndroidBridge&&AndroidBridge.chat)AndroidBridge.chat(ph,text);else window.open('https://wa.me/'+ph+'?text='+encodeURIComponent(text),'_blank');return true}
+async function deliverKot(k){const m=(S.kcfg&&S.kcfg.mode)||'wa';
+if(m==='wa'||m==='both'){if(!kotWa(k))return}
+if(m==='print'||m==='both')await doKot(k)}
+function kotSetup(k){const d=$('#dlg');d.style.maxWidth='';const c=S.kcfg||{num:'',mode:'wa'};
+d.innerHTML=`<h3>KOT settings</h3><p class="mut" style="font-size:13px">Kitchen ka WhatsApp number daalein. KOT us chat mein khulegi, bas Send dabana hoga.</p><p><input id="kn" type="tel" inputmode="tel" placeholder="10 digit kitchen WhatsApp number" value="${esc(c.num||'')}"></p><p id="ke" style="color:var(--red);font-size:13px;min-height:16px"></p><p><select id="km" aria-label="KOT kaise bhejna hai">${[['wa','WhatsApp pe bhejna'],['print','Printer se print karna'],['both','WhatsApp + Print dono'],['none','Sirf record rakhna']].map(([v,t])=>`<option value="${v}" ${v===(c.mode||'wa')?'selected':''}>${t}</option>`).join('')}</select></p><div class="row"><button class="btn alt" id="kc">Cancel</button><button class="btn" id="ks">${k?'Save aur KOT bhejein':'Save'}</button></div>`;
+if(!d.open)d.showModal();
+$('#kc').onclick=()=>d.close();
+$('#ks').onclick=()=>{let p=$('#kn').value.replace(/\D/g,'');if(p.length>10&&p.indexOf('91')===0)p=p.slice(2);const m=$('#km').value;
+ if((m==='wa'||m==='both')&&p.length!==10){$('#ke').textContent='Sahi 10 digit number daalein';return}
+ S.kcfg={num:p.length===10?p:'',mode:m};save();d.close();toast('KOT settings saved');if(k)deliverKot(k);else if(tab==='kot')kots()}}
+function kots(){const L=S.kots||[],m=(S.kcfg&&S.kcfg.mode)||'wa',ml={wa:'WhatsApp pe',print:'Printer se',both:'WhatsApp + Print',none:'Sirf record'}[m]||'WhatsApp pe';
+$('#app').innerHTML=`<div class="card"><div class="row" style="margin-bottom:6px"><h3>KOTs</h3><button class="btn alt sm fit" id="ksb">⚙ KOT settings</button></div><div class="mut" style="font-size:13px;margin-bottom:10px">KOT bhejna: <b>${ml}</b>${kotNum()?' · Kitchen number: '+kotNum():' · Kitchen number set nahi hai'}</div>${L.length?`<div class="wrap"><table><tr><th>KOT</th><th>Time</th><th>Type</th><th>Table</th><th>Items</th><th></th></tr>${L.map((k,i)=>`<tr><td>#${k.no}</td><td>${new Date(k.time).toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'})}</td><td>${esc(k.type)}</td><td>${esc(k.table)||'–'}</td><td>${k.shift?'🔁 Table '+esc(k.shift.from)+' → '+esc(k.shift.to):esc(k.items.map(l=>l.qty+'× '+l.name+(l.size?' ('+l.size+')':'')).join(', '))}${k.cancels.length?' <b style="color:var(--red)">· cancel: '+esc(k.cancels.map(l=>l.qty+'× '+l.name).join(', '))+'</b>':''}</td><td class="n" style="white-space:nowrap"><button class="btn alt sm" data-kw="${i}">WhatsApp</button> <button class="btn alt sm" data-kr="${i}">Print</button></td></tr>`).join('')}</table></div>`:'<div class="empty">Abhi koi KOT nahi bheja gaya. New bill screen pe "Send KOT" dabayein.</div>'}</div>`;
+$('#ksb').onclick=()=>kotSetup();
+document.querySelectorAll('[data-kw]').forEach(b=>b.onclick=()=>kotWa(L[+b.dataset.kw]));
+document.querySelectorAll('[data-kr]').forEach(b=>b.onclick=()=>doKot(L[+b.dataset.kr]))}
+
+let WT=(Array.isArray(S.wt)&&S.wt.length)?S.wt.slice():['1','2','3','4','5'];
+function tablesW(el){
+const cnt=k=>{const c=k===cur?cart:(OPEN[k]&&OPEN[k].cart)||[];return c.reduce((a,l)=>a+l.qty,0)};
+el.innerHTML='<div class="mut" style="font-size:12px;margin-bottom:6px">Pehle table chunein, phir dishes add karein</div><div class="chips" style="margin:0;padding:0;position:static;flex-wrap:wrap">'+WT.map(k=>`<button class="chip ${k===cur?'on':''}" data-t="${k}" style="padding:8px 16px;font-size:15px">Table ${k}${cnt(k)?' · '+cnt(k):''}</button>`).join('')+'<button class="chip" data-rf="1" style="border:1px dashed var(--mut);background:none;padding:8px 14px;font-size:14px">↻ Menu</button></div>'}
+function cartUIW(){park();tables();const n=cart.reduce((a,l)=>a+l.qty,0),tl=cur==='Counter'?'Table ?':'Table '+esc(cur);
+$('#bar').innerHTML=`<div style="flex:1"><b>${tl} · ${n} item${n===1?'':'s'}</b></div><button class="btn" id="vb">View order</button>`;$('#vb').onclick=()=>$('#bcard').classList.add('open');
+$('#cart').innerHTML=cart.length?cart.map((l,i)=>`<div class="cl"><div>${esc(l.name)}${l.size?` <span class="tag">${esc(l.size)}</span>`:''}${l.note?`<br><small>✎ ${esc(l.note)}</small>`:''}</div><div style="white-space:nowrap"><button class="btn alt sm" data-m="${i}" aria-label="Decrease">−</button> ${l.qty} <button class="btn alt sm" data-p="${i}" aria-label="Increase">+</button> <button class="btn alt sm" data-nt="${i}" aria-label="Kitchen note">✎</button></div><span></span></div>`).join(''):`<div class="empty">${cur==='Counter'?'Pehle upar se table number chunein.':'Dish par tap karke order shuru karein.'}</div>`;
+$('#wact').innerHTML=`<div class="row" style="margin-top:12px"><button class="btn alt" id="clr">Clear</button><button class="btn" id="sw">Counter ko bhejein ➤</button></div>${cur!=='Counter'?'<div style="margin-top:8px"><button class="btn alt" id="shw" style="width:100%">⇄ Table shift</button></div>':''}`;
+$('#clr').onclick=()=>{cart=[];cx=[];cust={name:'',phone:''};const a=$('#cn'),b=$('#cp');if(a)a.value='';if(b)b.value='';cartUIW()};$('#sw').onclick=sendOrder;{const sw=$('#shw');if(sw)sw.onclick=shiftDlgW}
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{cart[b.dataset.p].qty++;cartUIW()});
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{if(--cart[b.dataset.m].qty<1)cart.splice(b.dataset.m,1);cartUIW()});
+document.querySelectorAll('[data-nt]').forEach(b=>b.onclick=()=>noteDlg(+b.dataset.nt))}
+function shiftDlgW(){if(cur==='Counter')return toast('Pehle table chunein');const d=$('#dlg');d.style.maxWidth='';
+d.innerHTML=`<h3>Table ${esc(cur)} se shift</h3><p class="mut" style="font-size:13px">Customer jis table pe gaya wo chunein. Counter pe chal raha order bhi naye table pe chala jayega.</p><div class="chips" id="swc" style="position:static;margin:0 0 12px;padding:0;flex-wrap:wrap">${WT.filter(t=>t!==cur).map(t=>`<button class="chip" data-sw="${t}" style="padding:10px 20px;font-size:17px">Table ${t}</button>`).join('')}</div><button class="btn alt" id="sc" style="width:100%">Cancel</button>`;
+if(!d.open)d.showModal();$('#sc').onclick=()=>d.close();
+$('#swc').onclick=e=>{const t=e.target.dataset.sw;if(!t)return;d.close();waiterShift(t)}}
+function waiterShift(to){const from=cur;if(from===to)return;park();mergeTable(from,to);cur=to;loadT(to);persist();
+if(DB){const id='o'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+ DB.doc('orders/'+id).set({id,type:'shift',from,to,table:to,by:WEMAIL,byName:WEMAIL.split('@')[0],time:new Date().toISOString(),status:'new',items:[]}).catch(()=>toast('Shift counter tak nahi gaya'))}
+bill();toast('Table '+from+' → '+to+' shift ho gaya');if(navigator.vibrate)navigator.vibrate(40)}
+async function sendOrder(){if(cur==='Counter')return toast('Pehle table number chunein');
+if(!cart.length)return toast('Pehle dish add karein');if(!DB)return toast('Login ya internet check karein');
+let ph=String(cust.phone||'').replace(/\D/g,'');if(ph.length>10&&ph.indexOf('91')===0)ph=ph.slice(2);
+if(String(cust.phone||'').trim()&&ph.length!==10)return toast('WhatsApp number 10 digit ka hona chahiye (ya khaali chhodein)');
+const id='o'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+o={id,table:cur,by:WEMAIL,byName:WEMAIL.split('@')[0],time:new Date().toISOString(),status:'new',cname:String(cust.name||'').trim().slice(0,40),cphone:ph,items:cart.map(l=>({k:l.k,name:l.name,size:l.size||'',price:l.price,qty:l.qty,note:l.note||''}))};
+const w=DB.doc('orders/'+id).set(o);
+const done=await Promise.race([w.then(()=>true),new Promise(r=>setTimeout(()=>r(false),4000))]).catch(()=>null);
+if(done===null)return toast('Order nahi ja paya. Dubara koshish karein');
+cart=[];cx=[];cust={name:'',phone:''};{const a=$('#cn'),b=$('#cp');if(a)a.value='';if(b)b.value=''}cartUIW();$('#bcard').classList.remove('open');
+toast(done?'Order counter ko bhej diya ✓ · Table '+o.table:'Net slow hai: order queue mein hai, net aate hi chala jayega');if(navigator.vibrate)navigator.vibrate(60)}
+function sent(){const L=[...WORD].sort((a,b)=>String(b.time).localeCompare(String(a.time)));
+$('#app').innerHTML=`<div class="card"><h3 style="margin-bottom:10px">Bheje gaye orders</h3>${L.length?L.map(o=>{const rc=o.status==='received'&&!o._p,st=o._p?'Bhej raha hai…':rc?'Counter ne le liya ✓':'Bheja gaya ✓';return `<div class="cl" style="grid-template-columns:1fr auto"><div><b>${o.type==='shift'?'🔁 Table '+esc(o.from)+' → '+esc(o.to):'Table '+esc(o.table)}</b> <small class="mut">${new Date(o.time).toLocaleTimeString('en-IN',{timeStyle:'short'})}</small><br><small>${esc((o.items||[]).map(l=>l.qty+'× '+l.name+(l.size?' ('+l.size+')':'')).join(', '))}</small></div><span class="tag ${rc?'paid':''}">${st}</span></div>`}).join(''):'<div class="empty">Abhi koi order nahi bheja.</div>'}</div>`}
+function beep(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=880;g.gain.value=.08;o.start();setTimeout(()=>{o.stop();a.close()},350)}catch(e){}}
+function markRecv(id){if(DB)DB.doc('orders/'+id).update({status:'received',at:new Date().toISOString()}).catch(()=>{})}
+function applyWaiterOrder(o){const id=o&&o.id;if(!id||!CAN)return;
+if((S.seenO||[]).includes(id)){markRecv(id);return}
+const t=String(o.table||'').trim(),its=Array.isArray(o.items)?o.items:[];if(!t||!its.length){markRecv(id);return}
+if(!OPEN[t])OPEN[t]={name:t,cart:[],cust:{name:'',phone:''},disc:0,mode:'Cash',otype:'Dine-in',cx:[]};
+const tgt=cur===t?cart:OPEN[t].cart;let n=0;
+its.forEach(it=>{const q=Math.max(1,Math.floor(+it.qty)||1),price=+it.price||0,note=String(it.note||'').slice(0,60);n+=q;
+ const ex=tgt.find(l=>l.k===it.k&&l.price===price&&(l.note||'')===note);
+ if(ex)ex.qty+=q;else{const l={k:it.k,name:String(it.name||''),size:it.size||'',price,qty:q};if(note)l.note=note;tgt.push(l)}});
+const cname=String(o.cname||'').trim().slice(0,40),cpn=String(o.cphone||'').replace(/\D/g,'').slice(-10),cc=cur===t?cust:(OPEN[t].cust=OPEN[t].cust||{name:'',phone:''});
+if(cname&&!cc.name)cc.name=cname;if(cpn.length===10&&!cc.phone)cc.phone=cpn;
+if(cur===t&&tab==='bill'){const a=$('#cn'),b=$('#cp');if(a)a.value=cust.name;if(b)b.value=cust.phone}
+S.seenO=[...(S.seenO||[]),id].slice(-300);save();
+if(cur===t){park();if(tab==='bill')cartUI()}else{persist();if(DB)DB.doc('open/'+slug(t)).set(OPEN[t]).catch(()=>{});if(tab==='bill')tables()}
+markRecv(id);beep();speak('टेबल '+t+' पर नया ऑर्डर आया है, '+n+' आइटम','New order, table '+t+', '+n+' items');NEWO.unshift({t,by:o.byName||'waiter',cust:[cname,cpn.length===10?cpn:''].filter(Boolean).join(' · '),n,items:its.map(l=>l.qty+'× '+l.name+(l.size?' ('+l.size+')':'')).join(', ')});NEWO=NEWO.slice(0,5);orderBanner()}
+let NOB_OPEN=false;
+function nobPos(){const r=$('#bell'),b=$('#nob');if(r&&b)b.style.top=(r.getBoundingClientRect().bottom+6)+'px'}
+function orderBanner(){const b=$('#nob');if(!b)return;
+if(!NEWO.length)NOB_OPEN=false;
+const bl=$('#bell');if(bl){bl.classList.toggle('ring',NEWO.length>0);bl.querySelector('.bn').textContent=NEWO.length||''}
+b.style.display=NOB_OPEN?'block':'none';if(NOB_OPEN)nobPos();
+b.innerHTML=NEWO.map((o,i)=>o.shift?`<div class="ob"><b>🔁 Table ${esc(o.shift.from)} → Table ${esc(o.shift.to)}</b> <small class="mut">· ${esc(o.by)} ne shift kiya</small><div class="row" style="margin-top:8px">${o.hadSent?`<button class="btn sm" data-ob="s${i}">Kitchen ko batayein</button>`:''}<button class="btn alt sm" data-ob="o${i}">Open</button><button class="btn alt sm fit" data-ob="x${i}" aria-label="Dismiss">✕</button></div></div>`:`<div class="ob"><b>🔔 Table ${esc(o.t)} · ${esc(o.by)}</b>${o.cust?`<br><small>👤 ${esc(o.cust)}</small>`:''}<br><small>${esc(o.items)}</small><div class="row" style="margin-top:8px"><button class="btn sm" data-ob="k${i}">Send KOT</button><button class="btn alt sm" data-ob="o${i}">Open</button><button class="btn alt sm fit" data-ob="x${i}" aria-label="Dismiss">✕</button></div></div>`).join('');
+b.onclick=e=>{const v=(e.target.closest('[data-ob]')||{dataset:{}}).dataset.ob;if(!v)return;const i=+v.slice(1),o=NEWO[i];if(!o)return;
+ if(v[0]==='x'){NEWO.splice(i,1);orderBanner();return}
+ if(v[0]==='s'){NEWO.splice(i,1);orderBanner();shiftKot(o.shift.from,o.shift.to);return}
+ NOB_OPEN=false;park();cur=o.t;loadT(cur);persist();tab='bill';render();NEWO.splice(i,1);orderBanner();if(v[0]==='k')sendKot()}}
+document.addEventListener('click',e=>{const pa=e.composedPath();if(pa.some(n=>n.id==='bell')){if(!NEWO.length){toast('Koi naya notification nahi');return}NOB_OPEN=!NOB_OPEN;orderBanner();return}if(NOB_OPEN&&!pa.some(n=>n.id==='nob')){NOB_OPEN=false;orderBanner()}});
+window.addEventListener('scroll',nobPos,{passive:true});window.addEventListener('resize',nobPos);
+let VOICE=true;try{VOICE=localStorage.getItem(KEY+'.voice')!=='0'}catch(e){}
+function voiceBtn(){const b=$('#vo');if(b)b.textContent=VOICE?'🔊 Voice ON':'🔇 Voice OFF'}
+function speak(hi,en){if(!VOICE||!('speechSynthesis' in window))return;try{const h=(speechSynthesis.getVoices()||[]).find(v=>/^hi/i.test(v.lang)),u=new SpeechSynthesisUtterance(h?hi:en);u.lang=h?'hi-IN':'en-IN';if(h)u.voice=h;u.rate=.95;u.volume=1;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+$('#vo').onclick=()=>{VOICE=!VOICE;try{localStorage.setItem(KEY+'.voice',VOICE?'1':'0')}catch(e){}voiceBtn();if(VOICE)speak('आवाज़ चालू','Voice on');else try{speechSynthesis.cancel()}catch(e){}};
+try{if('speechSynthesis' in window)speechSynthesis.getVoices()}catch(e){}
+voiceBtn();
+function mergeTable(a,b){const s=OPEN[a];if(!s)return;const t=OPEN[b];
+if(!t)OPEN[b]={...clone(s),name:b};
+else{s.cart.forEach(l=>{const ex=t.cart.find(x=>x.k===l.k&&x.price===l.price&&(x.note||'')===(l.note||''));if(ex){ex.qty+=l.qty;ex.sent=(ex.sent||0)+(l.sent||0)}else t.cart.push(clone(l))});
+ t.cx=[...(t.cx||[]),...(s.cx||[])];t.cust=t.cust||{name:'',phone:''};
+ if(!t.cust.name&&s.cust&&s.cust.name)t.cust.name=s.cust.name;if(!t.cust.phone&&s.cust&&s.cust.phone)t.cust.phone=s.cust.phone}
+delete OPEN[a]}
+function shiftCore(a,b){park();const s=OPEN[a];if(!s)return null;const hadSent=s.cart.some(l=>l.sent>0);
+mergeTable(a,b);if(cur===a)cur=b;loadT(cur);persist();
+if(DB){clearTimeout(pts[a]);delete pts[a];clearTimeout(pts[b]);delete pts[b];DB.doc('open/'+slug(a)).delete().catch(()=>{});DB.doc('open/'+slug(b)).set(OPEN[b]).catch(()=>{})}
+return{hadSent}}
+function applyShift(o){const id=o&&o.id;if(!id||!CAN)return;
+if((S.seenO||[]).includes(id)){markRecv(id);return}
+S.seenO=[...(S.seenO||[]),id].slice(-300);save();
+const a=String(o.from||'').trim(),b=String(o.to||'').trim();
+if(!a||!b||a===b||/^counter$/i.test(a)||/^counter$/i.test(b)){markRecv(id);return}
+const r=shiftCore(a,b);markRecv(id);if(!r)return;
+beep();speak('टेबल '+a+' से टेबल '+b+' पर शिफ्ट','Table '+a+' shifted to table '+b);
+NEWO.unshift({t:b,shift:{from:a,to:b},by:o.byName||'waiter',hadSent:r.hadSent});NEWO=NEWO.slice(0,5);orderBanner();
+if(tab==='bill')bill()}
+async function shiftKot(a,b){const t=new Date(),day=t.toLocaleDateString('en-CA');if(!S.kot||S.kot.d!==day)S.kot={d:day,n:0};S.kot.n++;
+const k={no:S.kot.n,day,time:t.toISOString(),type:'Shift',table:b,cust:'',items:[],cancels:[],shift:{from:a,to:b}};
+S.kots=[k,...(S.kots||[])].slice(0,300);save();toast('Shift KOT #'+k.no);await deliverKot(k)}
+function tablesDlg(){if(!CAN)return;const d=$('#dlg');d.style.maxWidth='';
+d.innerHTML=`<h3>Waiter ke tables</h3><p class="mut" style="font-size:13px">Waiter app mein ye tables dikhenge. Comma se alag karke likhein, jaise 1, 2, 3, 4, 5, 6. Naya table jodne ke liye bas naam badhao. Dono waiters ke phone mein apne aap update ho jayega.</p><p><input id="tl" value="${esc(WT.join(', '))}" autocomplete="off"></p><div class="row"><button class="btn alt" id="tc2">Cancel</button><button class="btn" id="ts">Save</button></div>`;
+if(!d.open)d.showModal();$('#tc2').onclick=()=>d.close();
+$('#ts').onclick=()=>{const l=[...new Set($('#tl').value.split(/[,\n]/).map(x=>x.trim().slice(0,20)).filter(x=>x&&!/^counter$/i.test(x)))].slice(0,40);
+ if(!l.length)return toast('Kam se kam ek table likhein');
+ WT=l;S.wt=l;save();d.close();tables();
+ if(!DB)return toast('Cloud login nahi hai: tables sirf is device mein hain');
+ DB.doc('store/tables').set({list:l,at:new Date().toISOString()}).then(()=>toast('Waiter tables update ho gaye ✓')).catch(()=>toast('⚠ Tables save nahi hue, owner login ya net check karein'))}}
+function shiftDlg(){if(cur==='Counter')return toast('Pehle koi table chunein');const d=$('#dlg');d.style.maxWidth='';
+const others=Object.keys(OPEN).filter(k=>k!=='Counter'&&k!==cur).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})),hs=cart.some(l=>l.sent>0);
+d.innerHTML=`<h3>Table ${esc(cur)} ko shift karein</h3><p class="mut" style="font-size:13px">Poora order dusre table pe chala jayega. Agar wo table pehle se chal raha hai to dono order jud jayenge.</p><p><input id="sh" placeholder="Naya table number (jaise 7)" maxlength="20" autocomplete="off"></p>${others.length?`<div class="mut" style="font-size:12px;margin-bottom:4px">Chal rahe tables:</div><div class="chips" id="shc" style="position:static;margin:0 0 10px;padding:0;flex-wrap:wrap">${others.map(k=>`<button class="chip" data-st="${esc(k)}">${esc(k)}</button>`).join('')}</div>`:''}${hs?'<p><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="sk" checked style="width:auto"> Kitchen ko shift KOT bhejein</label></p>':''}<div class="row"><button class="btn alt" id="sc">Cancel</button><button class="btn" id="sg">Shift karein</button></div>`;
+if(!d.open)d.showModal();
+$('#sc').onclick=()=>d.close();const sc=$('#shc');if(sc)sc.onclick=e=>{const t=e.target.dataset.st;if(t)$('#sh').value=t};
+$('#sh').onkeydown=e=>{if(e.key==='Enter')$('#sg').click()};
+$('#sg').onclick=()=>{const to=$('#sh').value.trim().slice(0,20),a=cur;if(!to)return toast('Table number likhein');if(to===a)return toast('Ye wahi table hai');if(/^counter$/i.test(to))return toast('Counter pe shift nahi ho sakta');
+ const kot=!!($('#sk')&&$('#sk').checked),r=shiftCore(a,to);d.close();bill();toast('Table '+a+' → '+to+' shift ho gaya');if(r&&r.hadSent&&kot)shiftKot(a,to)}}
+function cleanOrders(){if(!DB)return;DB.collection('orders').where('status','==','received').get().then(sn=>{const lim=Date.now()-3*864e5;sn.docs.forEach(d=>{const o=d.data();if(new Date(o.time).getTime()<lim)d.ref.delete().catch(()=>{})})}).catch(()=>{})}
+
+const waText=v=>{const W=26,fm=n=>String(+(+n||0).toFixed(2)),pad=(t,n)=>t+' '.repeat(Math.max(0,n-t.length)),lp=(t,n)=>' '.repeat(Math.max(0,n-t.length))+t,
+wrap=(t,n)=>{const out=[];let ln='';String(t).split(' ').forEach(w=>{while(w.length>n){if(ln){out.push(ln);ln=''}out.push(w.slice(0,n));w=w.slice(n)}const tt=ln?ln+' '+w:w;if(tt.length>n){out.push(ln);ln=w}else ln=tt});if(ln)out.push(ln);return out},
+lr=(a,b)=>pad(a,W-b.length)+b,dash='-'.repeat(W),
+info=[['Bill',v.no],['Date',new Date(v.date).toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'})]];
+if(v.cust)info.push(['Name',v.cust]);if(v.table)info.push(['Table',v.table]);if(v.otype&&v.otype!=='Dine-in')info.push(['Type',v.otype]);
+const inf=[];info.forEach(r=>{const w=wrap(r[1],W-8);inf.push(pad(r[0],6)+': '+(w[0]||''));for(let j=1;j<w.length;j++)inf.push(' '.repeat(8)+w[j])});
+const rows=[];v.lines.forEach(l=>{wrap(l.name,W).forEach(t=>rows.push(t));rows.push('  '+pad(l.size||'-',6)+lp(String(l.qty),3)+lp(fm(l.price*l.qty),W-11))});
+const sub=v.lines.reduce((a,l)=>a+l.price*l.qty,0),dv=sub*Math.min(Math.max(+v.disc||0,0),100)/100,total=sub-dv;
+const tot=[lr('Subtotal',inr(sub))];if(dv>0)tot.push(lr('Discount '+v.disc+'%','-'+inr(dv)));tot.push(dash,lr('TOTAL',inr(total)));
+const B='```',big=t=>[...t].map(c=>c>='A'&&c<='Z'?String.fromCodePoint(0x1D5D4+c.charCodeAt(0)-65):c).join(''),nw=BIZ.name.toUpperCase().split(' '),n2=nw.pop(),n1=nw.join(' '),bar='━━━━━━━━━━━━━━━━';
+return `🍽️ *${BIZ.name.toUpperCase()}*\n📍 ${BIZ.addr}\n📞 ${BIZ.phone}\n\n🧾 *BILL ${v.no}*\n${B}\n${inf.join('\n')}\n${B}\n${B}\nItem\n  ${pad('Size',6)}${lp('Qty',3)}${lp('Amount',W-11)}\n${dash}\n${rows.join('\n')}\n${dash}\n${tot.join('\n')}\n${B}\n${v.paid?'✅ *Paid · '+v.mode+'*':'⏳ *Payment due*'}\n\n🙏 Thank you! Visit again\n_Good Food · Good Mood_`};
+const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+async function billCanvas(v,S){S=S||1;
+const W=576,P=28,H=900+v.lines.length*110,c=document.createElement('canvas');c.width=W*S;c.height=H*S;const x=c.getContext('2d');x.scale(S,S);
+x.fillStyle='#fff';x.fillRect(0,0,W,H);let y=26;
+const F=(w,s)=>x.font=`${w} ${s}px Arial, Helvetica, sans-serif`;
+const wrap=(t,mw)=>{const out=[];let ln='';String(t).split(' ').forEach(w=>{const tt=ln?ln+' '+w:w;if(x.measureText(tt).width>mw&&ln){out.push(ln);ln=w}else ln=tt});if(ln)out.push(ln);return out};
+const ctr=(t,s,w)=>{F(w||'400',s);x.fillStyle='#111';x.textAlign='center';wrap(t,W-2*P).forEach(l=>{y+=s;x.fillText(l,W/2,y);y+=s*.3})};
+const dash=()=>{y+=8;x.strokeStyle='#555';x.setLineDash([6,5]);x.beginPath();x.moveTo(P,y);x.lineTo(W-P,y);x.stroke();y+=14};
+const lr=(a,b,s,w)=>{F(w||'400',s);x.fillStyle='#111';y+=s;x.textAlign='left';x.fillText(a,P,y);x.textAlign='right';x.fillText(b,W-P,y);y+=s*.4};
+const img=await loadImg(LOGO);if(img){x.drawImage(img,W/2-50,y,100,100);y+=110}
+ctr(BIZ.name,30,'700');ctr(BIZ.addr,19);ctr('Phone: '+BIZ.phone,20,'600');dash();
+lr(v.no,new Date(v.date).toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'}),20);
+lr(v.cust+(v.phone?' · '+v.phone:''),(v.otype&&v.otype!=='Dine-in'?v.otype+(v.table?' · ':''):'')+(v.table?'Table '+v.table:''),20);dash();
+const fm=n=>(+n||0).toLocaleString('en-IN',{maximumFractionDigits:2}),QX=352,RX=452,AX=W-P;
+F('700',18);x.fillStyle='#111';y+=18;x.textAlign='left';x.fillText('Item',P,y);x.textAlign='center';x.fillText('Qty',QX,y);x.textAlign='right';x.fillText('Rate',RX,y);x.fillText('Amt',AX,y);y+=4;dash();
+v.lines.forEach(l=>{const nm=l.name+(l.size?' ('+l.size+')':'');F('600',21);const ls=wrap(nm,QX-P-34);
+ ls.forEach((t,i)=>{y+=21;x.textAlign='left';x.fillStyle='#111';x.fillText(t,P,y);if(i===0){x.textAlign='center';x.fillText(String(l.qty),QX,y);x.textAlign='right';x.fillText(fm(l.price),RX,y);x.fillText(fm(l.price*l.qty),AX,y)}y+=7});y+=9});
+dash();lr('Subtotal',inr(v.sub),21);if(v.disc)lr('Discount '+v.disc+'%','−'+inr(v.sub-v.total),21);
+y+=6;lr('TOTAL',inr(v.total),30,'700');y+=8;
+ctr(v.paid?'Paid · '+v.mode:'PAYMENT DUE',20,'700');dash();ctr('Thank you! Visit again',20);ctr('Good Food · Good Mood',17);
+const o=document.createElement('canvas');o.width=W*S;o.height=Math.ceil((y+24)*S);const g=o.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,W*S,o.height);g.drawImage(c,0,0);return o}
+function makePdf(jpg,w,h){const enc=new TextEncoder(),pw=227,ph=+(h*pw/w).toFixed(2),parts=[],offs=[];let len=0;
+const push=b=>{parts.push(b);len+=b.length},txt=t=>push(enc.encode(t));
+const obj=(n,body,st)=>{offs[n]=len;txt(n+' 0 obj\n'+body);if(st){push(st);txt('\nendstream')}txt('\nendobj\n')};
+txt('%PDF-1.4\n');obj(1,'<< /Type /Catalog /Pages 2 0 R >>');obj(2,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+obj(3,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw} ${ph}] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>`);
+const cs=`q ${pw} 0 0 ${ph} 0 0 cm /Im0 Do Q`;obj(4,`<< /Length ${cs.length} >>\nstream\n${cs}\nendstream`);
+obj(5,`<< /Type /XObject /Subtype /Image /Width ${w} /Height ${h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.length} >>\nstream\n`,jpg);
+const xr=len;txt('xref\n0 6\n0000000000 65535 f \n');for(let i=1;i<=5;i++)txt(String(offs[i]).padStart(10,'0')+' 00000 n \n');
+txt(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xr}\n%%EOF`);return new Blob(parts,{type:'application/pdf'})}
+const blobB64=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(String(f.result).split(',')[1]);f.readAsDataURL(b)});
+async function saveFile(name,blob){if(window.AndroidBridge){AndroidBridge.save(name,blob.type||'application/octet-stream',await blobB64(blob));return true}let dl=null;try{dl=window.claude&&claude.use?await claude.use('downloads'):null}catch(e){}
+if(!dl){if(window.claude)return false;const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);return true}try{await dl.save({filename:name,data:blob})}catch(e){if(!e||e.code!=='declined')toast('Could not save the file')}return true}
+async function doPdf(v){try{const cv=await billCanvas(v),bin=atob(cv.toDataURL('image/jpeg',.92).split(',')[1]),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+ if(!(await saveFile(v.no+'.pdf',makePdf(u,cv.width,cv.height))))window.print()}catch(e){toast('Could not create the PDF')}}
+async function printCv(cv,name){const B=window.AndroidBridge,blob=()=>new Promise(r=>cv.toBlob(r,'image/png'));
+if(B){if(typeof B.print==='function'){try{B.print(await blobB64(await blob()));return}catch(e){}}
+ await saveFile(name+'.png',await blob());toast('Printer se print nahi hua, image save kar di');return}
+try{const url=cv.toDataURL('image/png'),mm=Math.ceil(72*cv.height/cv.width)+10,f=document.createElement('iframe');
+ f.setAttribute('aria-hidden','true');f.style.cssText='position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0;pointer-events:none';document.body.appendChild(f);
+ const w=f.contentWindow,doc=w.document;doc.open();
+ doc.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(name)}</title><style>@page{size:80mm ${mm}mm;margin:0}html,body{margin:0;background:#fff}img{display:block;width:72mm;margin:4mm}</style></head><body><img id="i" src="${url}"></body></html>`);doc.close();
+ await new Promise(r=>{const i=doc.getElementById('i');if(i.complete)r();else{i.onload=r;i.onerror=r}});
+ setTimeout(()=>{try{w.focus();w.print()}catch(e){}},50);setTimeout(()=>f.remove(),120000)}
+catch(e){await saveFile(name+'.png',await blob());toast('Print nahi ho paya, image save kar di')}}
+async function doPrint(v){try{await printCv(await billCanvas(v,window.AndroidBridge?2:1),v.no)}catch(e){toast('Print nahi ho paya')}}
+async function doImg(v){try{const cv=await billCanvas(v),b=await new Promise(r=>cv.toBlob(r,'image/png'));if(!(await saveFile(v.no+'.png',b)))toast('Saving is not available here')}catch(e){toast('Could not create the image')}}
+function waChat(v,p){const text=waText(v),ph='91'+p;
+if(window.AndroidBridge&&AndroidBridge.chat){AndroidBridge.chat(ph,text);return}
+window.open('https://wa.me/'+ph+'?text='+encodeURIComponent(text),'_blank')}
+function askWa(v){const d=$('#dlg');
+d.innerHTML=`<h3>Send bill on WhatsApp</h3><p class="mut">Customer ka WhatsApp number daalein. Number phone mein save hona zaroori nahi.</p><p><input id="wp" type="tel" inputmode="tel" placeholder="10 digit mobile number" value="${esc(v.phone||'')}"></p><p id="we" style="color:var(--red);font-size:13px;min-height:16px"></p><p><button class="btn" id="wt" style="width:100%">WhatsApp par bill bhejein</button></p><p><button class="btn alt" id="wb" style="width:100%">Back</button></p><p class="mut" style="font-size:12px">Customer ki chat bill ke saath khulegi, bas Send dabayein.</p>`;
+setTimeout(()=>{const i=$('#wp');if(i&&!i.value)i.focus()},100);
+const num=()=>{let p=$('#wp').value.replace(/\D/g,'');if(p.length>10&&p.indexOf('91')===0)p=p.slice(2);
+ if(p.length!==10){$('#we').textContent='Sahi 10 digit number daalein';return null}
+ if(v.phone!==p){v.phone=p;saveInv(v)}return p};
+$('#wb').onclick=()=>showInv(v.no);
+$('#wt').onclick=()=>{const p=num();if(p)waChat(v,p)};
+$('#wp').onkeydown=e=>{if(e.key==='Enter')$('#wt').click()}}
+async function shareWa(v){const text=waText(v);
+if(window.AndroidBridge){try{const cv=await billCanvas(v),b=await new Promise(r=>cv.toBlob(r,'image/png'));AndroidBridge.share(v.no+'.png','image/png',await blobB64(b),text,(()=>{const p=(v.phone||'').replace(/\D/g,'');return p.length===10?'91'+p:p})(),v.cust||'');return}catch(e){}}
+try{const cv=await billCanvas(v),b=await new Promise(r=>cv.toBlob(r,'image/png')),f=new File([b],v.no+'.png',{type:'image/png'});
+ if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],text});return}}catch(e){if(e&&e.name==='AbortError')return}
+const p=(v.phone||'').replace(/\D/g,'');window.open('https://wa.me/'+(p.length===10?'91'+p:p)+'?text='+encodeURIComponent(text),'_blank');toast('For the picture bill: Save image, then attach it in WhatsApp')}
+function custs(){
+const m={};S.invoices.forEach(v=>{const k=v.cust+'|'+v.phone;const c=m[k]=m[k]||{name:v.cust,phone:v.phone,n:0,t:0,due:0};c.n++;c.t+=v.total;if(!v.paid)c.due+=v.total});const L=Object.values(m).sort((a,b)=>b.t-a.t);
+$('#app').innerHTML=`<div class="card"><h3 style="margin-bottom:10px">Customers</h3>${L.length?`<div class="wrap"><table><tr><th>Name</th><th>Phone</th><th class="n">Bills</th><th class="n">Spent</th><th class="n">Due</th></tr>${L.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.phone)||'–'}</td><td class="n">${c.n}</td><td class="n">${inr(c.t)}</td><td class="n" style="${c.due?'color:var(--red);font-weight:600':''}">${inr(c.due)}</td></tr>`).join('')}</table></div>`:'<div class="empty">Customers appear here once you save a bill with a name.</div>'}</div>`}
+function rep(){
+const td=new Date().toDateString(),T=S.invoices.filter(v=>new Date(v.date).toDateString()===td);const sum=(a,f)=>a.reduce((s,v)=>s+f(v),0);
+const pm={};S.invoices.forEach(v=>{const k=v.paid?v.mode:'Due';pm[k]=(pm[k]||0)+v.total});
+const top={};S.invoices.forEach(v=>v.lines.forEach(l=>{const k=l.name+(l.size?' ('+l.size+')':'');top[k]=(top[k]||0)+l.qty}));const tp=Object.entries(top).sort((a,b)=>b[1]-a[1]).slice(0,8);
+$('#app').innerHTML=`<div class="stats"><div class="card stat"><b>${inr(sum(T,v=>v.total))}</b><span>Today's sales (${T.length} bills)</span></div><div class="card stat"><b>${inr(sum(S.invoices,v=>v.total))}</b><span>All-time sales</span></div><div class="card stat"><b>${S.invoices.length}</b><span>Total bills</span></div><div class="card stat"><b>${inr(sum(S.invoices.filter(v=>!v.paid),v=>v.total))}</b><span>Payments due</span></div></div>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"><div class="card"><h3>Payment split</h3>${Object.keys(pm).length?Object.entries(pm).map(([k,v])=>`<div class="tot"><span>${k}</span><span>${inr(v)}</span></div>`).join(''):'<div class="empty">No sales yet.</div>'}</div><div class="card"><h3>Top sellers</h3>${tp.length?tp.map(([k,v])=>`<div class="tot"><span>${esc(k)}</span><span>${v} sold</span></div>`).join(''):'<div class="empty">No sales yet.</div>'}</div></div>`}
+$('#dlg').addEventListener('close',()=>{$('#dlg').style.maxWidth=''});
+$('#hl').src=LOGO;render();initCloud();
+if(!window.AndroidBridge&&'serviceWorker' in navigator&&location.protocol.indexOf('http')===0)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>

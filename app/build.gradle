@@ -22,6 +22,20 @@ android {
         versionCode Integer.parseInt(System.getenv('GITHUB_RUN_NUMBER') ?: '1')
         versionName '2.8'
     }
+
+    flavorDimensions 'role'
+    productFlavors {
+        owner {
+            dimension 'role'
+            applicationId 'com.citydiner.billing'
+            manifestPlaceholders = [appLabel: 'City Diner']
+        }
+        waiter {
+            dimension 'role'
+            applicationId 'com.citydiner.waiter'
+            manifestPlaceholders = [appLabel: 'CityDiner Waiter']
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
